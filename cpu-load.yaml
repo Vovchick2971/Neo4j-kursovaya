@@ -1,0 +1,9 @@
+- name: cpu-load
+  hosts: localhost
+  tasks:
+   - name: cpu load
+     command: uptime
+     register: cpu_load
+   - name:
+     debug:
+	 var: cpu_load.stdout_lines

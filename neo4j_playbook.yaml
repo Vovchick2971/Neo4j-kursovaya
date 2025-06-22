@@ -1,0 +1,23 @@
+---
+- hosts: astra
+  become: true
+  tasks:
+- name: Download JDK 24 debian package
+    get_url:
+      url: https://download.oracle.com/java/24/latest/jdk-24_linux-x64_bin.deb
+      dest: /home/user/jdk-24_linux-x64_bin.deb
+  - name: Install JDK 24
+    shell: dpkg -i /home/user/jdk-24_linux-x64_bin.deb
+ - name: Download Neo4j
+   get url:
+       url:
+https://debian.neo4j.com/neotechnology.gpg.key
+      dest: /usr/share/keyrings/neo4j.gpg
+      shell: apt install neo4j
+  - name: Configure neo4j.configuration
+    linefile:
+	 path: /etc/neo4j/neo4j.conf
+	 line: server.bolt.enabled=true
+	 line: server.bolt.listen_address=0.0.0.0:7687
+	  line: server.http.enabled=true
+	 line: server.http.listen_address=0.0.0.0:7474
